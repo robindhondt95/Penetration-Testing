@@ -7,17 +7,17 @@
 
 # Enable monitor mode
 
+Monitordevice has different name than interface
 `> airmon-ng start [interface]`
-(monitordevice different name than interface)
 
 OR
+
+Monitordevice has the same name than interface
 ```
 > ifconfig [interface] down
 > iwconfig [interface] mode monitor
 > ifconfig [interface] up
 ```
-(monitordevice same name than interface)
-
 
 # Start general packet sniffing
 
