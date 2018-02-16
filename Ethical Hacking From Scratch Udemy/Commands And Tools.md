@@ -31,7 +31,7 @@ Ex: `> airodump-ng mon0`
 Ex: `> airodump-ng –channel 6 –bssid 11:22:33:44:55:66 –write out mon0`
 
 
-#Deauthentication attacks
+# Deauthentication attacks
 To disconnect a device from the AP to let it reauthenticate 
 ------------------------------------------
 
