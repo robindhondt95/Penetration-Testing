@@ -8,6 +8,7 @@
 # Enable monitor mode
 
 Monitordevice has different name than interface
+
 `> airmon-ng start [interface]`
 
 OR
