@@ -22,16 +22,24 @@ Monitordevice has the same name than interface
 
 # Start general packet sniffing
 
-`> airodump-ng [interface]`
-Ex: `> airodump-ng mon0`
+```
+> airodump-ng [interface]
+
+Example:
+
+> airodump-ng mon0
+```
 
 
 # Start targeted packet sniffing
 
-`> airodump-ng --channel [channel] --bssid [bssid] --write [file-name] [interface]`
-Ex: `> airodump-ng –channel 6 –bssid 11:22:33:44:55:66 –write out mon0`
+```
+> airodump-ng --channel [channel] --bssid [bssid] --write [file-name] [interface]
 
+Example: 
 
+> airodump-ng –channel 6 –bssid 11:22:33:44:55:66 –write out mon0
+```
 # Deauthentication attacks
 To disconnect a device from the AP to let it reauthenticate 
 ------------------------------------------
