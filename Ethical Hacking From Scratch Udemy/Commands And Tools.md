@@ -1,12 +1,12 @@
 # Network Penetration Testing
-## Change MAC-address
+### Change MAC-address
 ```
 > ifconfig [interface] down
 > macchanger -m [MAC] [interface]
 > ifco`fig [interface] up
 ```
 
-## Enable monitor mode
+### Enable monitor mode
 
 Monitordevice has different name than interface
 
