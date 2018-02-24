@@ -511,7 +511,7 @@ copy and paste the code from beef (next to Example:)
 chance the ip address to the ip address of the target.
 Every target that connects to that browser, will be hooked to beef.
 start the webserver: `service apache2 start`
-Use DNS Spoofing or social engineering to let your target browe your website.
+Use DNS Spoofing or social engineering to let your target browse your website.
 ```
 
 ### Beef - Hooking targets using MITMF
