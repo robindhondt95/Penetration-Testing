@@ -3,7 +3,7 @@
 ```
 > ifconfig [interface] down
 > macchanger -m [MAC] [interface]
-> ifco`fig [interface] up
+> ifconfig [interface] up
 ```
 
 ### Enable monitor mode
