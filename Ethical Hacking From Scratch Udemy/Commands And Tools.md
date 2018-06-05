@@ -772,6 +772,23 @@ Use an exploit to hack the new device through the new route, the device will now
 
 # Website Penetration testing
 
+## Information Gathering
+
+Find info about the owner of the website:
+http://whois.domaintools.com
+
+Show technologies used on website:
+http://toolbar.netcraft.com/site_report?url=
+
+Show comprehensive info about target website:
+https://www.robtex.com
+
+Install knock:
+
+`git clone https://github.com/guelfoweb/knock.git`
+`cd know/knockpy/`
+`python knockpy.py google.com` (website you want to examine)
+
 
 
 
